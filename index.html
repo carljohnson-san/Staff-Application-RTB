@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RTB | Staff Application</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
@@ -11,55 +11,125 @@
             margin: 0; padding: 0;
             background-color: #050505;
             background-image: radial-gradient(1.5px 1.5px at 20px 20px, #ffcc00, rgba(0,0,0,0)), radial-gradient(1px 1px at 80px 80px, #ffffff, rgba(0,0,0,0));
-            background-size: 150px 150px;
+            background-size: 100px 100px; /* Smaller pattern for mobile */
             color: #ffcc00;
             font-family: 'Rajdhani', sans-serif;
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            display: flex; justify-content: center; align-items: flex-start; /* Start at top for scrolling */
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
             background: rgba(10, 10, 10, 0.98);
             border: 2px solid #ffcc00;
             box-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
-            padding: 35px;
-            width: 95%; max-width: 700px;
-            text-align: center; border-radius: 2px;
+            padding: 20px; /* Reduced padding for mobile */
+            width: 90%; 
+            max-width: 700px;
+            text-align: center; 
+            border-radius: 2px;
+            margin: 20px 0; /* Margin for top/bottom spacing */
         }
 
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; margin-bottom: 25px; letter-spacing: 4px; border-bottom: 1px solid #ffcc00; padding-bottom: 10px; }
+        h1 { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 1.1rem; /* Scaled down for mobile */
+            margin-bottom: 20px; 
+            letter-spacing: 2px; 
+            border-bottom: 1px solid #ffcc00; 
+            padding-bottom: 10px; 
+        }
 
         .stage { display: none; }
         .stage.active { display: block; animation: fadeIn 0.4s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .question-text { font-size: 1.15rem; margin-bottom: 20px; color: #fff; font-weight: bold; line-height: 1.4; }
+        .question-text { 
+            font-size: 1rem; 
+            margin-bottom: 20px; 
+            color: #fff; 
+            font-weight: bold; 
+            line-height: 1.4; 
+        }
 
         input[type="text"] {
-            background: #111; border: 1px solid #ffcc00; color: #fff; padding: 12px;
-            width: 80%; margin-bottom: 20px; font-family: 'Orbitron', sans-serif; text-align: center;
+            background: #111; 
+            border: 1px solid #ffcc00; 
+            color: #fff; 
+            padding: 15px;
+            width: 85%; 
+            margin-bottom: 20px; 
+            font-family: 'Orbitron', sans-serif; 
+            text-align: center;
+            font-size: 1rem;
+            -webkit-appearance: none; /* Fix for iOS */
         }
 
         .btn {
-            display: block; width: 100%; padding: 18px; margin: 12px 0;
-            background: transparent; color: #ffcc00;
-            border: 1px solid #ffcc00; font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem; cursor: pointer; transition: 0.2s;
-            text-align: left; line-height: 1.3;
+            display: block; 
+            width: 100%; 
+            padding: 18px 10px; 
+            margin: 12px 0;
+            background: transparent; 
+            color: #ffcc00;
+            border: 1px solid #ffcc00; 
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem; 
+            cursor: pointer; 
+            transition: 0.2s;
+            text-align: center; /* Center text better for mobile */
+            line-height: 1.3;
+            box-sizing: border-box;
+            touch-action: manipulation; /* Faster taps */
         }
 
-        .btn:hover { background: #ffcc00; color: #000; box-shadow: 0 0 15px #ffcc00; font-weight: bold; }
+        .btn:active, .btn:hover { 
+            background: #ffcc00; 
+            color: #000; 
+            box-shadow: 0 0 15px #ffcc00; 
+        }
 
         .summary-box {
-            text-align: left; background: #000; border: 1px solid #ffcc00;
-            padding: 20px; margin-top: 15px; color: #fff;
+            text-align: left; 
+            background: #000; 
+            border: 1px solid #ffcc00;
+            padding: 15px; 
+            margin-top: 15px; 
+            color: #fff;
+            word-wrap: break-word;
         }
-        .summary-item { border-bottom: 1px solid #222; padding: 10px 0; font-size: 0.85rem; }
-        .summary-item span { color: #ffcc00; font-weight: bold; display: block; margin-top: 5px; }
 
+        .summary-item { 
+            border-bottom: 1px solid #222; 
+            padding: 10px 0; 
+            font-size: 0.8rem; 
+        }
+
+        .summary-item span { 
+            color: #ffcc00; 
+            font-weight: bold; 
+            display: block; 
+            margin-top: 5px; 
+            font-size: 0.85rem;
+        }
+        
         .screenshot-header {
-            background: #ffcc00; color: #000; padding: 10px;
-            font-weight: bold; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;
+            background: #ffcc00; 
+            color: #000; 
+            padding: 10px;
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* PC Adjustments */
+        @media (min-width: 768px) {
+            h1 { font-size: 1.4rem; }
+            .question-text { font-size: 1.15rem; }
+            .btn { text-align: left; padding-left: 20px; font-size: 0.8rem; }
+            .container { padding: 35px; align-self: center; margin: 0; }
         }
     </style>
 </head>
@@ -71,34 +141,34 @@
 
         <div id="stage0" class="stage active">
             <p class="question-text">ENTER YOUR DISCORD USERNAME</p>
-            <input type="text" id="discordInput" placeholder="Username">
+            <input type="text" id="discordInput" placeholder="Username" autocomplete="off">
             <button class="btn" style="text-align: center;" onclick="startPortal()">START APPLICATION</button>
         </div>
 
         <div id="stage1" class="stage">
             <p class="question-text">1. Why do you want to become staff in this server?</p>
-            <button class="btn" onclick="record(1, 'To assist in maintaining server stability and order.')">A. TO ASSIST IN MAINTAINING SERVER STABILITY AND ORDER</button>
-            <button class="btn" onclick="record(1, 'To obtain a high-ranking tag for personal status.')">B. TO OBTAIN A HIGH-RANKING TAG FOR PERSONAL STATUS</button>
-            <button class="btn" onclick="record(1, 'To access restricted channels for curiosity.')">C. TO ACCESS RESTRICTED CHANNELS FOR CURIOSITY</button>
+            <button class="btn" onclick="record(1, 'To assist in maintaining server stability and order.')">A. MAINTAIN STABILITY & ORDER</button>
+            <button class="btn" onclick="record(1, 'To obtain a high-ranking tag for personal status.')">B. RANK STATUS</button>
+            <button class="btn" onclick="record(1, 'To access restricted channels for curiosity.')">C. ACCESS RESTRICTED CHANNELS</button>
         </div>
 
         <div id="stage2" class="stage">
             <p class="question-text">2. You see a blacklisted user. What would you do?</p>
-            <button class="btn" onclick="record(2, 'Notify an Admin immediately for a ban.')">A. NOTIFY AN ADMIN IMMEDIATELY FOR A BAN</button>
+            <button class="btn" onclick="record(2, 'Notify an Admin immediately for a ban.')">A. NOTIFY ADMIN FOR BAN</button>
             <button class="btn" onclick="record(2, 'Kick them and see if they come back.')">B. KICK THE USER</button>
             <button class="btn" onclick="record(2, 'Ignore them if they aren\'t doing anything.')">C. IGNORE THE USER</button>
         </div>
 
         <div id="stage3" class="stage">
             <p class="question-text">3. You see a spy user. What would you do?</p>
-            <button class="btn" onclick="record(3, 'Notify an Admin immediately for a ban.')">A. NOTIFY AN ADMIN IMMEDIATELY FOR A BAN</button>
+            <button class="btn" onclick="record(3, 'Notify an Admin immediately for a ban.')">A. NOTIFY ADMIN FOR BAN</button>
             <button class="btn" onclick="record(3, 'Try to befriend them for info.')">B. ATTEMPT TO GET INTEL</button>
             <button class="btn" onclick="record(3, 'Wait for them to do something bad first.')">C. MONITOR FOR ACTIVITY</button>
         </div>
 
         <div id="stage4" class="stage">
             <p class="question-text">4. You catch a staff member of your same rank being a spy. Action?</p>
-            <button class="btn" onclick="record(4, 'Gather proof and notify Manager, Co-Leader, Owner, or Founder.')">A. GATHER PROOF AND NOTIFY MANAGER+</button>
+            <button class="btn" onclick="record(4, 'Gather proof and notify Manager, Co-Leader, Owner, or Founder.')">A. GATHER PROOF & NOTIFY MANAGER+</button>
             <button class="btn" onclick="record(4, 'Confront them privately and tell them to stop.')">B. PRIVATE CONFRONTATION</button>
             <button class="btn" onclick="record(4, 'Report them publicly in the server.')">C. PUBLIC REPORT</button>
         </div>
@@ -126,18 +196,18 @@
 
         <div id="summary" class="stage">
             <div class="screenshot-header">FINAL APPLICATION SUMMARY</div>
-            <p style="color:#fff;">CANDIDATE: <span id="finalName" style="color:#ffcc00"></span></p>
+            <p style="color:#fff; font-size: 0.9rem;">CANDIDATE: <span id="finalName" style="color:#ffcc00"></span></p>
             <div class="summary-box">
-                <div class="summary-item">STG 1 (MOTIVATION): <span id="ans1"></span></div>
-                <div class="summary-item">STG 2 (BLACKLIST): <span id="ans2"></span></div>
-                <div class="summary-item">STG 3 (SPY USER): <span id="ans3"></span></div>
-                <div class="summary-item">STG 4 (PEER SECURITY): <span id="ans4"></span></div>
-                <div class="summary-item">STG 5 (FALSE REPORTS): <span id="ans5"></span></div>
-                <div class="summary-item">STG 6 (DISPUTES): <span id="ans6"></span></div>
-                <div class="summary-item">STG 7 (APPEALS): <span id="ans7"></span></div>
+                <div class="summary-item">STG 1: <span id="ans1"></span></div>
+                <div class="summary-item">STG 2: <span id="ans2"></span></div>
+                <div class="summary-item">STG 3: <span id="ans3"></span></div>
+                <div class="summary-item">STG 4: <span id="ans4"></span></div>
+                <div class="summary-item">STG 5: <span id="ans5"></span></div>
+                <div class="summary-item">STG 6: <span id="ans6"></span></div>
+                <div class="summary-item">STG 7: <span id="ans7"></span></div>
             </div>
-
-            <p style="font-size: 0.8rem; margin-top: 20px;">Take a screenshot of this screen and send it to a <strong>Manager+</strong>.</p>
+            
+            <p style="font-size: 0.75rem; margin-top: 20px;">Take a screenshot and send it to a <strong>Manager+</strong>.</p>
             <button class="btn" style="text-align: center;" onclick="location.reload()">RESET APPLICATION</button>
         </div>
     </div>
@@ -151,6 +221,7 @@
         document.getElementById('finalName').innerText = dUser;
         document.getElementById('stage0').classList.remove('active');
         document.getElementById('stage1').classList.add('active');
+        window.scrollTo(0, 0); // Reset scroll for mobile
     }
     function record(stage, text) {
         document.getElementById('ans' + stage).innerText = text;
@@ -158,6 +229,7 @@
         let next = stage + 1;
         if(next <= 7) document.getElementById('stage' + next).classList.add('active');
         else document.getElementById('summary').classList.add('active');
+        window.scrollTo(0, 0); // Reset scroll for mobile
     }
 </script>
 
