@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTB | Staff Application</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+
+        body {
+            margin: 0; padding: 0;
+            background-color: #050505;
+            background-image: radial-gradient(1.5px 1.5px at 20px 20px, #ffcc00, rgba(0,0,0,0)), radial-gradient(1px 1px at 80px 80px, #ffffff, rgba(0,0,0,0));
+            background-size: 150px 150px;
+            color: #ffcc00;
+            font-family: 'Rajdhani', sans-serif;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(10, 10, 10, 0.98);
+            border: 2px solid #ffcc00;
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
+            padding: 35px;
+            width: 95%; max-width: 700px;
+            text-align: center; border-radius: 2px;
+        }
+
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; margin-bottom: 25px; letter-spacing: 4px; border-bottom: 1px solid #ffcc00; padding-bottom: 10px; }
+
+        .stage { display: none; }
+        .stage.active { display: block; animation: fadeIn 0.4s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .question-text { font-size: 1.15rem; margin-bottom: 20px; color: #fff; font-weight: bold; line-height: 1.4; }
+
+        input[type="text"] {
+            background: #111; border: 1px solid #ffcc00; color: #fff; padding: 12px;
+            width: 80%; margin-bottom: 20px; font-family: 'Orbitron', sans-serif; text-align: center;
+        }
+
+        .btn {
+            display: block; width: 100%; padding: 18px; margin: 12px 0;
+            background: transparent; color: #ffcc00;
+            border: 1px solid #ffcc00; font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem; cursor: pointer; transition: 0.2s;
+            text-align: left; line-height: 1.3;
+        }
+
+        .btn:hover { background: #ffcc00; color: #000; box-shadow: 0 0 15px #ffcc00; font-weight: bold; }
+
+        .summary-box {
+            text-align: left; background: #000; border: 1px solid #ffcc00;
+            padding: 20px; margin-top: 15px; color: #fff;
+        }
+        .summary-item { border-bottom: 1px solid #222; padding: 10px 0; font-size: 0.85rem; }
+        .summary-item span { color: #ffcc00; font-weight: bold; display: block; margin-top: 5px; }
+
+        .screenshot-header {
+            background: #ffcc00; color: #000; padding: 10px;
+            font-weight: bold; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="portal-ui">
+        <h1>RTB STAFF APPLICATION</h1>
+
+        <div id="stage0" class="stage active">
+            <p class="question-text">ENTER YOUR DISCORD USERNAME</p>
+            <input type="text" id="discordInput" placeholder="Username">
+            <button class="btn" style="text-align: center;" onclick="startPortal()">START APPLICATION</button>
+        </div>
+
+        <div id="stage1" class="stage">
+            <p class="question-text">1. Why do you want to become staff in this server?</p>
+            <button class="btn" onclick="record(1, 'To assist in maintaining server stability and order.')">A. TO ASSIST IN MAINTAINING SERVER STABILITY AND ORDER</button>
+            <button class="btn" onclick="record(1, 'To obtain a high-ranking tag for personal status.')">B. TO OBTAIN A HIGH-RANKING TAG FOR PERSONAL STATUS</button>
+            <button class="btn" onclick="record(1, 'To access restricted channels for curiosity.')">C. TO ACCESS RESTRICTED CHANNELS FOR CURIOSITY</button>
+        </div>
+
+        <div id="stage2" class="stage">
+            <p class="question-text">2. You see a blacklisted user. What would you do?</p>
+            <button class="btn" onclick="record(2, 'Notify an Admin immediately for a ban.')">A. NOTIFY AN ADMIN IMMEDIATELY FOR A BAN</button>
+            <button class="btn" onclick="record(2, 'Kick them and see if they come back.')">B. KICK THE USER</button>
+            <button class="btn" onclick="record(2, 'Ignore them if they aren\'t doing anything.')">C. IGNORE THE USER</button>
+        </div>
+
+        <div id="stage3" class="stage">
+            <p class="question-text">3. You see a spy user. What would you do?</p>
+            <button class="btn" onclick="record(3, 'Notify an Admin immediately for a ban.')">A. NOTIFY AN ADMIN IMMEDIATELY FOR A BAN</button>
+            <button class="btn" onclick="record(3, 'Try to befriend them for info.')">B. ATTEMPT TO GET INTEL</button>
+            <button class="btn" onclick="record(3, 'Wait for them to do something bad first.')">C. MONITOR FOR ACTIVITY</button>
+        </div>
+
+        <div id="stage4" class="stage">
+            <p class="question-text">4. You catch a staff member of your same rank being a spy. Action?</p>
+            <button class="btn" onclick="record(4, 'Gather proof and notify Manager, Co-Leader, Owner, or Founder.')">A. GATHER PROOF AND NOTIFY MANAGER+</button>
+            <button class="btn" onclick="record(4, 'Confront them privately and tell them to stop.')">B. PRIVATE CONFRONTATION</button>
+            <button class="btn" onclick="record(4, 'Report them publicly in the server.')">C. PUBLIC REPORT</button>
+        </div>
+
+        <div id="stage5" class="stage">
+            <p class="question-text">5. A user is spamming false reports. Action?</p>
+            <button class="btn" onclick="record(5, 'Issue a warning for report system abuse.')">A. ISSUE A WARNING</button>
+            <button class="btn" onclick="record(5, 'Ignore the reports and the user.')">B. IGNORE THE REPORTS</button>
+            <button class="btn" onclick="record(5, 'Ban them immediately.')">C. BAN FOR SPAM</button>
+        </div>
+
+        <div id="stage6" class="stage">
+            <p class="question-text">6. You disagree with another staff member\'s decision. Action?</p>
+            <button class="btn" onclick="record(6, 'Discuss the matter privately and professionally.')">A. PRIVATE PROFESSIONAL DISCUSSION</button>
+            <button class="btn" onclick="record(6, 'Argue with them in general chat.')">B. PUBLIC ARGUMENT</button>
+            <button class="btn" onclick="record(6, 'Undo their action without asking.')">C. OVERRIDE ACTION</button>
+        </div>
+
+        <div id="stage7" class="stage">
+            <p class="question-text">7. Who handles unbanning and ban appeals?</p>
+            <button class="btn" onclick="record(7, 'Admin, Manager, Co-Leader, Owner, or Founder.')">A. ADMIN, MANAGER, CO-LEADER, OWNER, OR FOUNDER</button>
+            <button class="btn" onclick="record(7, 'Any moderator who is active.')">B. ANY ACTIVE MODERATOR</button>
+            <button class="btn" onclick="record(7, 'The person who was banned.')">C. THE BANNED USER</button>
+        </div>
+
+        <div id="summary" class="stage">
+            <div class="screenshot-header">FINAL APPLICATION SUMMARY</div>
+            <p style="color:#fff;">CANDIDATE: <span id="finalName" style="color:#ffcc00"></span></p>
+            <div class="summary-box">
+                <div class="summary-item">STG 1 (MOTIVATION): <span id="ans1"></span></div>
+                <div class="summary-item">STG 2 (BLACKLIST): <span id="ans2"></span></div>
+                <div class="summary-item">STG 3 (SPY USER): <span id="ans3"></span></div>
+                <div class="summary-item">STG 4 (PEER SECURITY): <span id="ans4"></span></div>
+                <div class="summary-item">STG 5 (FALSE REPORTS): <span id="ans5"></span></div>
+                <div class="summary-item">STG 6 (DISPUTES): <span id="ans6"></span></div>
+                <div class="summary-item">STG 7 (APPEALS): <span id="ans7"></span></div>
+            </div>
+
+            <p style="font-size: 0.8rem; margin-top: 20px;">Take a screenshot of this screen and send it to a <strong>Manager+</strong>.</p>
+            <button class="btn" style="text-align: center;" onclick="location.reload()">RESET APPLICATION</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let dUser = "";
+    function startPortal() {
+        dUser = document.getElementById('discordInput').value;
+        if(dUser.trim() === "") return alert("Please enter your Discord Username.");
+        document.getElementById('finalName').innerText = dUser;
+        document.getElementById('stage0').classList.remove('active');
+        document.getElementById('stage1').classList.add('active');
+    }
+    function record(stage, text) {
+        document.getElementById('ans' + stage).innerText = text;
+        document.getElementById('stage' + stage).classList.remove('active');
+        let next = stage + 1;
+        if(next <= 7) document.getElementById('stage' + next).classList.add('active');
+        else document.getElementById('summary').classList.add('active');
+    }
+</script>
+
+</body>
+</html>
